@@ -909,10 +909,10 @@ class InnerBrowser extends Module implements Web
 
     }
 
-	public function getPageSource()
-	{
-		return $this->client->getInternalResponse()->getContent();
-	}
+    public function getPageSource()
+    {
+	return $this->client->getInternalResponse()->getContent();
+    }
 	
     public function grabTextFrom($cssOrXPathOrRegex)
     {
