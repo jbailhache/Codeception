@@ -144,7 +144,17 @@ class Guzzle extends Client
 
     public function getAbsoluteUri($uri)
     {
-        $build = parse_url($this->baseUri);
+        if ($this->getHistory()->isEmpty())
+		{
+			$build = parse_url($this->baseUri);
+		}
+		else
+		{
+			$currentUri = $this->getHistory()->current()->getUri();
+			$currentBaseUri = preg_replace('~/[^/]*$~','',$currentUri);
+			$build = parse_url($currentBaseUri);
+		}
+		
         $uriParts = parse_url(preg_replace('~^/+(?=/)~', '', $uri));
         
         if ($build === false) {
