@@ -69,14 +69,25 @@ class InnerBrowser extends Module implements Web
         $this->client->setServerParameter('PHP_AUTH_USER', $username);
         $this->client->setServerParameter('PHP_AUTH_PW', $password);
     }
-
+    
     public function amOnPage($page)
     {
         $this->crawler = $this->client->request('GET', $page);
         $this->forms = [];
         $this->debugResponse();
     }
-
+    
+    public function restartBrowser()
+    {
+    	$this->client->restart();
+    }
+    
+    public function restartOnPage($page)
+    {
+    	$this->restartBrowser();
+    	$this->amOnPage($page);
+    }
+    
     public function click($link, $context = null)
     {
         if ($context) {
