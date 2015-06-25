@@ -165,6 +165,16 @@ class InnerBrowser extends Module implements Web
         }
     }
 
+    public function seeInHtml($text, $selector = null)
+    {
+        if (!$selector) {
+            $this->assertHtmlContains($text);
+        } else {
+            $nodes = $this->match($selector);
+            $this->assertDomContains($nodes, $this->stringifySelector($selector), $text);
+        }
+    }
+
     public function dontSee($text, $selector = null)
     {
         if (!$selector) {
@@ -1166,6 +1176,17 @@ class InnerBrowser extends Module implements Web
             $message
         );
     }
+    
+    protected function assertHtmlContains($needle, $message = '')
+    {
+        $constraint = new PageConstraint($needle, $this->_getCurrentUri());
+        $this->assertThat(
+            htmlspecialchars_decode($this->client->getInternalResponse()->getContent()),
+            $constraint,
+            $message
+        );
+    }
+
 
     protected function assertPageNotContains($needle, $message = '')
     {
