@@ -1,0 +1,44 @@
+BUILD AND START WITH CODECEPTION
+
+Requirements :
+
+composer
+http://culttt.com/2013/01/07/what-is-php-composer/
+https://getcomposer.org/download/
+
+Run this in your terminal to get the latest Composer version:
+$ curl -s https://getcomposer.org/installer | php
+$ php composer.phar install
+$ sudo mv composer.phar /usr/local/bin/composer
+
+Or if you don't have curl:
+php -r "readfile('https://getcomposer.org/installer');" | php
+
+installation :
+
+see http://codeception.com/install
+
+Build codecept.phar
+
+Download zip from https://github.com/jbailhache/Codeception, unzip in a directory, for example /src/Codeception-2.0.
+Or : cd /src ; git clone https://github.com/jbailhache/Codeception.git ; cd Codeception-2.0 .
+or for the original version : git clone git@github.com:Codeception/Codeception.git
+Copy composer.phar and robo.phar in this directory.
+Install dependencies :
+$ php composer.phar require "codeception/codeception:*"
+Build codecept.phar :
+$ php robo.phar build:phar
+codecept.phar is created in directory "package".
+
+Using Codeception :
+
+$ mkdir /projects/myproject
+$ cd /projects/myproject
+$ cp /src/Codeception-2.0/package/codecept.phar .
+$ php codecept.phar bootstrap
+$ nano tests/acceptance.suite.yml
+(modify url)
+$ php codecept.phar generate:cept acceptance Test
+$ nano tests/acceptance/TestCept.php
+$ export http_proxy=
+$ php codecept.phar run --step
